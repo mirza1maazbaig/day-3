@@ -1,8 +1,9 @@
 import { type SchemaTypeDefinition } from 'sanity'
-
-import Products from '@/app/products/page'
-import product from './product'
-
+import products from './product'
+import orders from './order'
+// import shippingForm from './shippingForm'
+import contactForm from "./contact"
+import review from './reviews'
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [product],
+  types: [products,contactForm,orders,review],
 }

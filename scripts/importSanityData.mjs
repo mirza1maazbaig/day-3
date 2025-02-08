@@ -2,11 +2,11 @@ import { createClient } from '@sanity/client';
 import fetch from 'node-fetch';
 
 const client = createClient({
-  projectId: "0b2flmnr",
-  dataset: "production",
-  useCdn: true,
+  projectId: " process.env.NEXT_PUBLIC_SANITY_PROJECT_ID",
+  dataset: "process.env.NEXT_PUBLIC_SANITY_DATASET,",
+  useCdn: false,
   apiVersion: '2025-01-13',
-  token: "skcT009XIe3qNAavsQTcM1MmWzzm61ASCTNTFG4j7qXU1zBufzdRYt5pgrCNoZF75HJspIqngSzb7HowPDeP3zOmnD1bXv63oJdTo2W3tzV5J8tSW6weMmUv1pMRjnQYQ3VS5hBdCcc58vKIIyx4tryrSFTd4aNaWF11CDuAimdKVpYqrKmk",
+  token: " process.env.SANITY_API_TOKEN",
 });
 
 async function uploadImageToSanity(imageUrl) {

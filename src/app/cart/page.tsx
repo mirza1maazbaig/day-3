@@ -1,99 +1,82 @@
-import { BreadcrumbDemo } from "@/components/Bredcrupm"
-import { Button } from "@/components/ui/button"
-import { Delete, Minus, Plus } from "lucide-react"
-import Image from "next/image"
-import { it } from "node:test"
+"use client"
+import { Button } from "@/components/ui/button";
+import { Minus, Plus } from "lucide-react";
+import React from "react";
+import { MdDelete } from "react-icons/md";
+import Cartpage from "./cartpage";
+import { useSelector } from "react-redux";
+import { BreadcrumbCollapsed } from "@/components/Bredcrupm";
+import Link from "next/link";
 
-interface Icart {
-    imageurl:string,
-    title:string,
-    id:number
-    size:string,
-    color:string,
-    price:string,
-}
-const cartItem:Icart[] = [
-    {
-     imageurl:"/product1.png",
-    title:"Gradient Graphic T-shirt",
-    id:1,
-    size:"large",
-    color:"white",
-    price:"$120",
-    },
-    {
-     imageurl:"/product2.png",
-    title:"Gradient Graphic T-shirt",
-    id:2,
-    size:"large",
-    color:"white",
-    price:"$120",
-    },
-    {
-     imageurl:"/product3.png",
-    title:"Gradient Graphic T-shirt",
-    id:3,
-    size:"large",
-    color:"white",
-    price:"$120",
-    }
-]
+const Page = () => {
+ 
+  interface CartItem {
+    price: number;
+    discount: number;
+    qty: number;
+  }
+  
+  const cartArray: CartItem[] = useSelector((state: { cart: CartItem[] }) => state.cart);
+  
+  const total = cartArray.reduce((total: number, arr: CartItem) => {
+    const discountedPrice = arr.discount > 0 ? arr.price - (arr.price * arr.discount) / 100 : arr.price;
+    return total + discountedPrice * arr.qty;
+  }, 0);
+  
+    
 
-export default function Cart(){
-    return(
-        <>
-           <div className=" pl-5">
-           <BreadcrumbDemo/>
-           <h1 className="text-2xl font-bold mt-2">Your cart</h1>
-           </div>
-        <div className="flex flex-col md:flex-row justify-center items-start gap-3 mt-6">
-            
-              
-                 <div className="w-full h-full md:w-[700px] md:h-[500px] border rounded-[20px]">
-                       {
-                        cartItem.map((item)=>{
-                            return(
-                                <div className="flex justify-between  mt-4 p-4 border-b" key={item.id}>
-                                   <div className="flex gap-3">
-                                   <Image src={item.imageurl} alt={item.title} className="rounded-[16px]" width={100} height={100}></Image>
-                                      <div>    
-                                          <h3 className="font-bold">{item.title}</h3>
-                                          <p className="text-sm">Size:{item.size}</p>
-                                          <p className="text-sm">Color:{item.color}</p>
-                                          <p className="font-bold">{item.price}</p>
-                                      </div>
-                                   </div>
-                                              
-                                             <div className="flex flex-col justify-between items-center space-y-5">
-                                             <Delete/>
-                                              <div className="w-[100px] h-[40px] flex justify-between p-3 items-center rounded-[62px] bg-[#F0F0F0] text-gray-400 ">
-                                                   <Minus/>
-                                                   1
-                                                   <Plus/>
-                                               </div>
-                                             </div>
-                                </div>
-                            )
-                        })
-                       }
-                 </div>
-              
-              <div className="w-full md:w-[400px] h-full md:h-[450px] border rounded-[20px]  flex flex-col justify-start items-center p-4">
-                   <div className="w-[90%] space-y-2">
-                   <h1 className="text-xl font-bold">Order Summary</h1>
-                    <p className="flex justify-between">Subtotal <span>$500</span> </p>
-                    <p className="flex justify-between">Subtotal <span>$100</span> </p>
-                    <p className="flex justify-between">Subtotal <span>$100</span> </p>
-                    <p className="flex justify-between">Total <span>$700</span> </p>
-                   <div className="flex">
-                   <input className="bg-[#F0F0F0] w-[200px] md:w-full py-2 px-5 rounded-[16px] text-gray-600 outline-none" placeholder="Add promo code" />
-                   <Button className="ml-1">Apply</Button>
-                   </div>
-                    <Button className="w-full">Go To Checkout</Button>
-                    
-                   </div>
-              </div>
-        </div>
-        </>
-    )
+  return (
+       <>
+       <div className=" max-w-screen-2xl   mx-auto mt-28 lg:mt-36">
+         <BreadcrumbCollapsed/>
+    <div className="flex flex-col justify-center items-center relative"> 
+        
+    <div className="w-[95%] max-w-[1200px]  ">
+    </div>
+  
+          <div className=" sm:w-full  flex flex-col lg:flex-row justify-center items-start gap-6 p-5">
+                  <Cartpage/>
+                  {/* right */}
+                    {/* Order Summary */}
+                         <div className="bg-white p-4 w-full lg:w-[500px] border rounded-[20px]">
+                             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+                             <div className="space-y-2">
+                               <div className="flex justify-between">
+                                 <p>Subtotal</p>
+                                 <p>${total}</p>
+                               </div>
+                               <div className="flex justify-between">
+                                 <p>Discount (-20%)</p>
+                                 <p>-${0}</p>
+                               </div>
+                               <div className="flex justify-between">
+                                 <p>Delivery Fee</p>
+                                 <p>${0}</p>
+                               </div>
+                               <div className="border-t pt-2 flex justify-between font-bold">
+                                 <p>Total</p>
+                                 <p>${total}</p>
+                               </div>
+                               <div className="flex justify-between items-center">
+                                <input className="h-10 rounded-[6px] bg-[#F0F0F0] px-4 w-[200px] md:w-[360px] border-none" type="search" placeholder="Add promo code" />
+                                <Button className="w-[100px] rounded-[20px]">Apply</Button>
+                               </div>
+                             </div>
+                              {
+                                cartArray.length > 0 && 
+                                <Link href={"/checkout"}>
+                                <button  className="w-full mt-4 bg-black text-white py-2 rounded-md">
+                                   Go to Checkout
+                                 </button>
+                                </Link>  
+                              }
+                         </div>
+          </div>
+          </div>
+          </div>
+          </>
+      
+  )
 }
+
+export default Page;
