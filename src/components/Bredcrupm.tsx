@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-export function BreadcrumbCollapsed() {
+export function BreadcrumbCollapsed () {
   return (
    <div className="max-w-screen-2xl  mx-auto">
     

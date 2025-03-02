@@ -5,7 +5,7 @@ import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoCartOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import { SheetSide } from "./Humburgur";
-import { NavigationMenuDemo } from "./navigationMenu";
+import { NavigationMenuDemo } from "./NavigationMenu";
 import { useSelector } from "react-redux";
 import AnnouncementBar from "./AnnouncementBar";
 import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";

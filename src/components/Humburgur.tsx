@@ -16,7 +16,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { NavigationMenuDemo } from "./navigationMenu";
+import { NavigationMenuDemo } from "./NavigationMenu";
 
 const SHEET_SIDES = [ "left"] as const
 
